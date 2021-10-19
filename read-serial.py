@@ -7,11 +7,10 @@ import serial
 #arduino_port = "/dev/cu.usbmodem14201" # CHANGE according serial port of Arduino
 #baud = 9600 #arduino uno runs at 9600 baud
 
-arduino = serial.Serial(port='COM4', baudrate=9600, timeout=.1)
+arduino = serial.Serial(port='COM5', baudrate=9600, timeout=.1)
 fileName = "AVF_data.csv" #name of the CSV file generated
 
-ser = serial.Serial(arduino_port, baud)
-print("Connected to Arduino port:" + arduino_port)
+print("Connected to Arduino port")
 file = open(fileName, "a")
 print("Created file")
 

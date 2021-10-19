@@ -12,7 +12,7 @@ void setup()
 
 // Global variables
 int data1; // store data from both sensors
-int freq = 1000; // data collection frequency ~x milliseconds
+int freq = 100; // data collection frequency ~x milliseconds
 String dataLabel1 = "Microphone A";
 bool label = true;
 
@@ -20,7 +20,7 @@ void loop()
 {
     // print out column headers at top of CSV file
     while(label){ // runs once only!
-        Serial.print(Mic A);
+        Serial.print("Mic A");
         label=false;
     }
 
