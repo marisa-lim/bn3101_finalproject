@@ -2,6 +2,8 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 import math
+import pandas as pd
+from datetime import datetime
 
 # CREATE RANDOM DATASET
 
@@ -70,18 +72,44 @@ def create_avglist(dataset):
 
 #################################################### STEP 1: CREATE DATA #################################################################
 
-# Create base measurement data
+####################### Create base measurement data #######################
 
-sample_data = create_data(500, 300, 0.4, 0, 2, 0.05)
+n_days = 100 # for how many consecutive days that data has been collected!
+
+sample_data = create_data(n_days, 300, 0.4, 0, 2, 0.05)
 #plot_reading(sample_data[0], 'Reading Plot', 'Time', 'Audio signal detected')
 #plot_reading(sample_data[499], 'Reading Plot', 'Time', 'Audio signal detected')
 
-####################################################### STEP 2: CLEANING DATA ############################################################
-
 # Find average audio signal per reading
 
-averages = create_avglist(sample_data)
-#plot_reading(averages, 'Average values across readings', 'Reading', 'Average audio signal')
+full_data = create_avglist(sample_data)
+#plot_reading(full_data, 'Average values across readings', 'Reading', 'Average audio signal')
 
-####################################################### STEP 3: PREDICTION ###############################################################
+####################### Create list of sample dates for period n_days #######################
 
+datetime_list = pd.date_range(end = datetime.today(), periods = n_days).to_pydatetime().tolist()
+date_list = []
+for i in range(len(datetime_list)):
+  date_list.append(str(datetime_list[i])[0:10])
+
+#print(date_list)
+print("Start date: ", date_list[0], "| End date: ", date_list[len(date_list)-1])
+
+####################### Create Pandas Dataframe #######################
+
+df = pd.DataFrame(list(zip(date_list, full_data)), columns =['Date', 'Daily Mean'])
+df # This must be the last line to display df. Otherwise, use print(df)
+
+df['Date'] = pd.to_datetime(df['Date'])
+df = df.set_index('Date')
+
+####################################################### STEP 2: PLOTTING DATA ############################################################
+
+y = df['Daily Mean']
+fig, ax = plt.subplots(figsize=(20, 6))
+plt.grid(color="#D6EAF8")
+plt.title("Trendline Plot")
+ax.plot(y,marker='.', linestyle='-', linewidth=0.5, label='Daily')
+ax.plot(y.resample('W').mean(),marker='o', markersize=8, linestyle='-', label='Weekly Mean')
+ax.set_ylabel('Audio signal acquired')
+ax.legend();
