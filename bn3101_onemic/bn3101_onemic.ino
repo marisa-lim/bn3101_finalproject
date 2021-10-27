@@ -30,10 +30,9 @@ void loop()
     {
         data1 += analogRead(sensor1);
     }
-    data1 = data1/100;
+    data1 = data1/100; // to make it more sensitive
 
     // Display Data to Serial Monitor in [data1, data2] format
-    Serial.println(data1);
-
+    Serial.println(data1); //-2200
     delay(freq);
 }
