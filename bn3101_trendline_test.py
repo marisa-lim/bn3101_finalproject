@@ -80,6 +80,18 @@ sample_data = create_data(n_days, 300, 0.4, 0, 2, 0.05)
 #plot_reading(sample_data[0], 'Reading Plot', 'Time', 'Audio signal detected')
 #plot_reading(sample_data[499], 'Reading Plot', 'Time', 'Audio signal detected')
 
+data = sample_data[80]
+time = list(range(1,301,1))
+fig, ax = plt.subplots(figsize=(8, 6))
+ax.plot(time, data, label='Raw Data')
+y_avg = [np.mean(data)] * len(data)
+ax.plot(time, y_avg, color='red', ls='--', label="Average Reading")
+plt.xlabel("Time")
+plt.ylabel("Signal acquired")
+plt.ylim(0,5)
+plt.legend()
+plt.show()
+
 # Find average audio signal per reading
 
 full_data = create_avglist(sample_data)
@@ -113,3 +125,19 @@ ax.plot(y,marker='.', linestyle='-', linewidth=0.5, label='Daily')
 ax.plot(y.resample('W').mean(),marker='o', markersize=8, linestyle='-', label='Weekly Mean')
 ax.set_ylabel('Audio signal acquired')
 ax.legend();
+
+####################################################### OPTIONAL: PLOTTING ALL DATA ############################################################
+
+#for i in range(len(sample_data)):
+#  data = sample_data[i]
+#  time = list(range(1,301,1))
+#  fig, ax = plt.subplots(figsize=(8, 6))
+#  ax.plot(time, data, label='Raw Data')
+#  y_avg = [np.mean(data)] * len(data)
+#  ax.plot(time, y_avg, color='red', ls='--', label="Average Reading")
+#  plt.title("Recording for Day " + str(i))
+#  plt.xlabel("Time")
+#  plt.ylabel("Signal acquired")
+#  plt.ylim(0,5)
+#  plt.legend()
+#  plt.show()
